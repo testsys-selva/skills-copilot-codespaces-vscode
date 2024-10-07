@@ -1,0 +1,15 @@
+{
+    "name": "comments-server",
+    "version": "1.0.0",
+    "description": "A simple comments server using Express",
+    "main": "comments.js",
+    "scripts": {
+      "start": "node comments.js"
+    },
+    "dependencies": {
+      "express": "^4.17.1",
+      "body-parser": "^1.19.0"
+    },
+    "author": "",
+    "license": "ISC"
+  }

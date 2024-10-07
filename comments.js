@@ -1,23 +1,42 @@
-// create web server
-// create a new express app
+//create a web server
 const express = require('express');
+const bodyParser = require('body-parser');
+const fs = require('fs');
 const app = express();
-// create a new comments array
-const comments = [
-  { username: "Todd", comment: "lol that is so funny!" },
-  { username: "Skyler", comment: "I like to go birdwatching with my dog" },
-  { username: "Sk8erBoi", comment: "Plz delete your account, Todd" },
-  { username: "onlysayswoof", comment: "woof woof woof" }
-];
-// create a route that sends back the entire comments array
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
 app.get('/comments', (req, res) => {
-  res.send(comments);
+    fs.readFile('./comments.json', 'utf8', (err, data) => {
+        if(err) {
+            res.status(500).send('An error occurred');
+        } else {
+            res.send(data);
+        }
+    });
 });
-// listen on port 3000
-app.listen(3000, () => {
-  console.log('Server is listening on port 3000');
+
+app.post('/comments', (req, res) => {
+    const newComment = req.body;
+    fs.readFile('./comments.json', 'utf8', (err, data) => {
+        if(err) {
+            res.status(500).send('An error occurred');
+        } else {
+            const comments = JSON.parse(data);
+            comments.push(newComment);
+            fs.writeFile('./comments.json', JSON.stringify(comments), (err) => {
+                if(err) {
+                    res.status(500).send('An error occurred');
+                } else {
+                    res.send('Comment added');
+                }
+            });
+        }
+    });
 });
-// run the server with node comments.js
-// open your browser and go to http://localhost:3000/comments
-// you should see the entire comments array displayed in your browser
-// if you don't see the comments array, check your code and make sure it is correct
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
