@@ -1,20 +1,14 @@
-// create web server
-var express = require('express');
-var app = express();
-
-// create a route
-app.get('/comments', function(req, res) {
-    res.send('This is the comments page');
+//create web server
+/*
+const express = require('express');
+const app = express();
+const port = 3000;
+//create a route
+app.get('/comments', (req, res) => {
+    res.send('Hello World');
 });
-
-// create a sub-route
-app.get('/comments/new', function(req, res) {
-    res.send('This is the new comments page');
+//listen for the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
-
-// start the server
-app.listen(3000, function() {
-    console.log('Server is running on http://localhost:3000');
-});
-
-// Run the server and go to http://localhost:3000/comments and http://localhost:3000/comments/new in your browser.
+*/
