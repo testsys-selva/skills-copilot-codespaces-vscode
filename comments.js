@@ -1,42 +1,20 @@
-//create a web server
-const express = require('express');
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const app = express();
-const port = 3000;
+// create web server
+var express = require('express');
+var app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.get('/comments', (req, res) => {
-    fs.readFile('./comments.json', 'utf8', (err, data) => {
-        if(err) {
-            res.status(500).send('An error occurred');
-        } else {
-            res.send(data);
-        }
-    });
+// create a route
+app.get('/comments', function(req, res) {
+    res.send('This is the comments page');
 });
 
-app.post('/comments', (req, res) => {
-    const newComment = req.body;
-    fs.readFile('./comments.json', 'utf8', (err, data) => {
-        if(err) {
-            res.status(500).send('An error occurred');
-        } else {
-            const comments = JSON.parse(data);
-            comments.push(newComment);
-            fs.writeFile('./comments.json', JSON.stringify(comments), (err) => {
-                if(err) {
-                    res.status(500).send('An error occurred');
-                } else {
-                    res.send('Comment added');
-                }
-            });
-        }
-    });
+// create a sub-route
+app.get('/comments/new', function(req, res) {
+    res.send('This is the new comments page');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+// start the server
+app.listen(3000, function() {
+    console.log('Server is running on http://localhost:3000');
 });
+
+// Run the server and go to http://localhost:3000/comments and http://localhost:3000/comments/new in your browser.
